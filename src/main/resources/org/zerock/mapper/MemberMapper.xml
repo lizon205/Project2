@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MApper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.MemberMapper">
+
+	<resultMap type="org.zerock.domain.MemberVO" id="memberMap">
+		<id property="userid" column="userid"/>
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="userName" column="username"/>
+		<result property="regDate" column="regDate"/>
+		<result property="addr" column="address"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+		<collection property="authList" resultMap="authMap">
+		</collection>
+	</resultMap>
+	
+	<resultMap type="org.zerock.domain.AuthVO" id="authMap">
+		<result property="userid" column="userid"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<select id="read" resultMap="memberMap">
+		SELECT 
+		mem.userid, userpw, username, enabled, regdate, updatedate, address, phone, email, auth 
+		FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth 
+		ON mem.userid = auth.userid 
+		WHERE mem.userid = #{userid}
+	</select>
+	
+	<insert id="create">
+	insert into tbl_member (userid, userpw, username, address, phone, email) 
+	values (#{userid}, #{userpw}, #{userName}, #{addr}, #{phone}, #{email})
+	</insert>
+	
+	<select id="idCheck" resultType="int">
+		select count(*) from tbl_member
+		where userid = #{userid}
+	</select>
+	
+	<insert id="create_auth">
+		insert into tbl_member_auth (userid, auth) 
+		values (#{userid}, 'ROLE_USER')
+	</insert>
+	
+	<select id="select" resultMap="memberMap">
+		SELECT userid, userpw, username, regdate, updatedate, address, phone, email
+		FROM tbl_member
+		WHERE userid = #{userid}
+	</select>
+		
+	
+	<update id="modify">
+		update tbl_member set userpw = #{userpw}, username = #{userName}, address = #{addr}, phone = #{phone}, email = #{email}, updatedate = sysdate  
+		where userid = #{userid}
+	</update>
+	
+</mapper>

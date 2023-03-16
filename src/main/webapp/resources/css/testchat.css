@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.chatBox {
+	
+}
+
+.a_chat {
+	background-color:lightgray;
+	padding:10;
+	text-align:left;
+
+}
+
+.b_chat {
+	background-color:lightyellow;
+	padding:10;
+	text-align:left;
+	
+}
