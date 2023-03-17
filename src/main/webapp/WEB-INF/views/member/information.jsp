@@ -45,19 +45,19 @@
 
 <div class="form-group">
 	<label>주소 : </label>
-	<input class="form-group" name='addr' id="addr" type="text" 
+	<input class="form-group" name='addr' id="addr" type="text" onkeydown="checkSpacebar2()" 
 		value='<c:out value="${member.addr }"/>'/>
 </div>
 
 <div class="form-group">
 	<label>번호 : </label>
-	<input class="form-group" name='phone' id="phone" type="text" 
+	<input class="form-group" name='phone' id="phone" type="text" onkeydown="checkSpacebar()"
 		value='<c:out value="${member.phone }"/>'/>
 </div>
 
 <div class="form-group">
 	<label>Email : </label>
-	<input class="form-group" name='email' id="email" type="text" 
+	<input class="form-group" name='email' id="email" type="text" onkeydown="checkSpacebar()"
 		value='<c:out value="${member.email }"/>'/>
 </div>
 
@@ -176,6 +176,15 @@ function checkSpacebar(){
 	
 	if(kcode == 32) event.returnValue = false;	
 	
+};
+	
+function checkSpacebar2(){
+	
+	var kcode = event.keyCode;
+	
+	if($("#addr").val().length < 1){
+		if(kcode == 32) event.returnValue = false;	
+	}
 };
 </script>
 
